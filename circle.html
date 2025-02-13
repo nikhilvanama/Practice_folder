@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            background-color: #f1f1f1;
+        }
+
+        .image-wrap {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            background-color: #805959;
+            overflow: hidden;
+        }
+
+        .centerimage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 480px;
+            width: 480px;
+            padding: 20px;
+
+        }
+
+        .centerimage img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .mini-circe {
+            height: 105px;
+            width: 105px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            font-weight: 600;
+            color: #000;
+
+        }
+
+        .mini-circe span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #005AA1;
+        }
+
+        .mini-circe.active {
+            background-color: #B9D533;
+        }
+
+        .mini-circe.active span {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div class="image-wrap">
+            <div class="centerimage">
+                <img src="https://rainbowlifts.com/wp-content/uploads/2024/11/image-4.png" alt="">
+            </div>
+            <div class="mini-circe active"
+                data-src="https://rainbowlifts.com/wp-content/uploads/2024/11/WhatsApp-Image-2024-11-13-at-14.48.57_82d91f79.jpg">
+                <span>Hydrallic Lifts</span>
+            </div>
+            <div class="mini-circe"
+                data-src="https://rainbowlifts.com/wp-content/uploads/2024/11/WhatsApp-Image-2024-11-13-at-14.50.18_374e74be.jpg">
+                <span>Observation Elevator</span>
+            </div>
+            <div class="mini-circe"
+                data-src="https://rainbowlifts.com/wp-content/uploads/2024/11/WhatsApp-Image-2024-11-13-at-14.51.49_b7216ef1.jpg">
+                <span>Freight Elevator</span>
+            </div>
+            <div class="mini-circe"
+                data-src="https://rainbowlifts.com/wp-content/uploads/2024/11/WhatsApp-Image-2024-11-13-at-14.52.41_d82ed954.jpg">
+                <span>Glass Door</span>
+            </div>
+            <div class="mini-circe"
+                data-src="https://rainbowlifts.com/wp-content/uploads/2024/11/WhatsApp-Image-2024-11-13-at-14.53.07_72bc5b87.jpg">
+                <span>MS Imperforated Door</span>
+            </div>
+            <div class="mini-circe"
+                data-src="https://rainbowlifts.com/wp-content/uploads/2024/11/WhatsApp-Image-2024-11-13-at-14.54.28_f2b1a978.jpg">
+                <span>MS Collapsible Gate</span>
+            </div>
+            <div class="mini-circe"
+                data-src="https://rainbowlifts.com/wp-content/uploads/2024/11/WhatsApp-Image-2024-11-13-at-14.51.00_62faae54.jpg">
+                <span>MS Cabin</span>
+            </div>
+            <div class="mini-circe"
+                data-src="https://rainbowlifts.com/wp-content/uploads/2024/11/WhatsApp-Image-2024-11-13-at-14.54.52_fb912136.jpg">
+                <span>SS Cabin</span>
+            </div>
+            <div class="mini-circe"
+                data-src="https://rainbowlifts.com/wp-content/uploads/2024/11/WhatsApp-Image-2024-11-13-at-14.58.26_9944d0af.jpg">
+                <span>Modification of exiting lifts</span>
+            </div>
+            <div class="mini-circe"
+                data-src="https://rainbowlifts.com/wp-content/uploads/2024/11/WhatsApp-Image-2024-11-13-at-14.56.42_28752509.jpg">
+                <span>Passenger Elevator</span>
+            </div>
+            <div class="mini-circe"
+                data-src="https://rainbowlifts.com/wp-content/uploads/2024/11/WhatsApp-Image-2024-11-13-at-14.56.10_cb1556c1.jpg">
+                <span>Hospital Elevator</span>
+            </div>
+            <div class="mini-circe"
+                data-src="https://rainbowlifts.com/wp-content/uploads/2024/11/WhatsApp-Image-2024-11-13-at-14.49.29_0b9678ee.jpg">
+                <span>Home Lifts (MRL)</span>
+            </div>
+        </div>
+        <div class="content-wrap">
+
+        </div>
+    </section>
+    <script>
+        $(document).ready(function () {
+            var miniCircle = $('.mini-circe');
+            var radius = 240; // Radius for the circular arrangement
+            var centerX = 350; // Center position X (half of image-wrap width)
+            var centerY = 350; // Center position Y (half of image-wrap height)
+            var totalCircles = miniCircle.length;
+            var angleStep = (2 * Math.PI) / totalCircles;
+
+            // Arrange the mini circles around the main circle
+            miniCircle.each(function (index) {
+                var angle = index * angleStep;
+                var x = centerX + radius * Math.cos(angle) - $(this).width() / 2;
+                var y = centerY + radius * Math.sin(angle) - $(this).height() / 2;
+
+                $(this).css({
+                    left: x + 'px',
+                    top: y + 'px'
+                });
+            });
+            setInterval(() => {
+                let currntitem = $('.mini-circe.active')
+                let nextitem = currntitem.next('.mini-circe')
+                if (nextitem.length == 0) {
+                    nextitem = $('.mini-circe').first()
+                }
+                jQuery('.centerimage img').attr('src',nextitem.attr('data-src'))
+                currntitem.removeClass('active')
+                nextitem.addClass('active')
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/TextPlugin.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Manrope&display=swap');
+
+        :root {
+            --gray: #e3eaff;
+            --black: #050908;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: clamp(8px, 1.3vw, 18px);
+            font-family: 'Manrope', sans-serif;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: var(--black);
+            background-color: white;
+            min-height: 100lvh;
+        }
+
+        .loader {
+            display: inline-block;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            z-index: 999;
+
+            div {
+                box-sizing: border-box;
+                display: block;
+                position: absolute;
+                width: 8rem;
+                height: 8rem;
+                margin: .25rem;
+                border: .25rem solid var(--black);
+                border-radius: 50%;
+                animation: loading-animation 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+                border-color: var(--black) transparent transparent transparent;
+
+                &:nth-child(1) {
+                    animation-delay: -0.45s;
+                }
+
+                &:nth-child(2) {
+                    animation-delay: -0.3s;
+                }
+
+                &:nth-child(3) {
+                    animation-delay: -0.15s;
+                }
+            }
+        }
+
+        @keyframes loading-animation {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .cursor {
+            pointer-events: none;
+
+            .big-circle,
+            .small-circle {
+                position: fixed;
+                z-index: 1000;
+                border-radius: 100%;
+                top: calc(var(--circle-size) / 2 * -1);
+                left: calc(var(--circle-size) / 2 * -1);
+            }
+
+            .big-circle {
+                --circle-size: 2rem;
+                width: var(--circle-size);
+                height: var(--circle-size);
+                border: 1px solid var(--black);
+            }
+
+            .small-circle {
+                --circle-size: 0.3rem;
+                width: var(--circle-size);
+                height: var(--circle-size);
+                background-color: var(--black);
+            }
+        }
+
+        .hero {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2rem 3rem 3rem;
+            background-color: var(--gray);
+            height: 100vh;
+            width: 100vw;
+            border-radius: 0;
+            overflow: hidden;
+
+            spline-viewer {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+            }
+        }
+
+        header,
+        .content {
+            position: relative;
+        }
+
+        header {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            align-items: center;
+            opacity: 0;
+
+            .logo {
+                display: flex;
+                align-items: center;
+                font-size: 1.2rem;
+                font-family: 'DM Sans', sans-serif;
+                margin-right: auto;
+
+                svg {
+                    height: 1.2rem;
+                    width: 1.2rem;
+                    margin-right: 0.5rem;
+                }
+
+                .copyright {
+                    font-size: 0.75rem;
+                    align-self: start;
+                }
+            }
+
+            nav {
+                justify-self: center;
+
+                ul {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    list-style: none;
+                    gap: 2rem;
+
+                    li {
+                        display: inline-flex;
+
+                        a {
+                            text-decoration: none;
+                            font-size: 0.8rem;
+                            font-weight: 700;
+                            letter-spacing: 0.5px;
+                            color: var(--black);
+                        }
+                    }
+                }
+            }
+
+            .button {
+                justify-self: end;
+            }
+        }
+
+        .content {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            pointer-events: none;
+
+            h1 {
+                font-family: 'DM Sans', sans-serif;
+                font-size: 3.5rem;
+                line-height: 1;
+                font-weight: 400;
+                border-radius: 2rem;
+
+                .line {
+                    overflow: hidden;
+
+                    .word {
+                        transform: translateY(100%);
+                    }
+                }
+            }
+
+            .text {
+                max-width: 24rem;
+                margin-left: 4rem;
+                opacity: 0;
+
+                p {
+                    font-size: 1rem;
+                    line-height: 1.5;
+                }
+            }
+        }
+
+        .button {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            overflow: hidden;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            padding: 0.75rem 1rem;
+            border-radius: 10rem;
+            box-shadow: 0 0.25rem 1rem -0.25rem rgba(127, 12, 185, 0);
+            transition: box-shadow ease-in-out .2s;
+
+            &::before {
+                content: '';
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                width: 100%;
+                background: linear-gradient(90deg, rgba(128, 242, 185, 1) 0%, rgba(242, 128, 185, 1) 40%, rgba(127, 12, 185, 1) 70%, rgba(13, 128, 185, 1) 100%);
+                padding-top: 100%;
+                animation: bgSpin 5s linear infinite;
+            }
+
+            &::after {
+                --border-width: 0.15rem;
+                content: '';
+                position: absolute;
+                z-index: 1;
+                display: block;
+                background-color: var(--gray);
+                width: calc(100% - var(--border-width) * 2);
+                height: calc(100% - var(--border-width) * 2);
+                left: var(--border-width);
+                top: var(--border-width);
+                border-radius: 10rem;
+                transform: scale(1);
+                transition: transform ease-in-out .2s;
+            }
+
+            span {
+                position: relative;
+                z-index: 2;
+                color: var(--black);
+                transition: color ease-in-out .2s;
+            }
+
+            &:hover {
+                box-shadow: 0 0.25rem 1rem -0.25rem rgba(127, 12, 185, 1);
+
+                &::after {
+                    transform: scale(0);
+                }
+
+                span {
+                    color: var(--white);
+                }
+            }
+        }
+
+        @keyframes bgSpin {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- https://codepen.io/gusevdigital/pen/xxBWwVG -->
+    <div class="loader">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="cursor">
+        <div class="big-circle"></div>
+        <div class="small-circle"></div>
+    </div>
+    <section class="hero">
+        <!--  SPLINE HERE  -->
+        <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.51/build/spline-viewer.js"></script>
+        <spline-viewer url="https://prod.spline.design/srCEmVK1iTeFHc7f/scene.splinecode"></spline-viewer>
+        <header>
+            <div class="logo">
+                <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24.8394" cy="6.27979" r="6.27979" fill="#050908" />
+                    <circle cx="43.3989" cy="6.27979" r="6.27979" fill="#050908" />
+                    <circle cx="6.27979" cy="24.8394" r="6.27979" fill="#050908" />
+                    <circle cx="24.8394" cy="24.8394" r="6.27979" fill="#050908" />
+                    <circle cx="43.3989" cy="24.8394" r="6.27979" fill="#050908" />
+                    <circle cx="24.8394" cy="43.3989" r="6.27979" fill="#050908" />
+                </svg>
+                <span>Remotos</span>
+                <span class="copyright">©</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Our Solutions</a></li>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Resources</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </nav>
+            <a href="#" class="button"><span>Get Started Today</span></a>
+        </header>
+        <div class="content">
+            <h1>
+                Stay connected, <br />work anywhere
+            </h1>
+            <div class="text">
+                <svg width="35" height="34" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M24.0095 22.6274C24.0094 22.8262 23.9304 23.0168 23.7898 23.1573C23.6493 23.2978 23.4587 23.3768 23.26 23.377L14.7747 23.377C14.674 23.3805 14.5737 23.3638 14.4797 23.3277C14.3856 23.2916 14.2998 23.237 14.2274 23.167C14.1549 23.0971 14.0973 23.0133 14.0579 22.9205C14.0185 22.8278 13.9982 22.7281 13.9982 22.6274C13.9982 22.5267 14.0185 22.427 14.0579 22.3343C14.0973 22.2416 14.1549 22.1578 14.2274 22.0878C14.2998 22.0179 14.3856 21.9632 14.4797 21.9272C14.5737 21.8911 14.674 21.8743 14.7747 21.8779L21.4498 21.8779L11.4159 11.8441C11.2753 11.7034 11.1963 11.5126 11.1963 11.3137C11.1963 11.1148 11.2753 10.924 11.4159 10.7834C11.5566 10.6427 11.7474 10.5637 11.9463 10.5637C12.1452 10.5637 12.336 10.6427 12.4766 10.7834L22.5105 20.8172L22.5105 14.1421C22.5069 14.0415 22.5237 13.9412 22.5597 13.8471C22.5958 13.7531 22.6504 13.6673 22.7204 13.5948C22.7903 13.5223 22.8742 13.4647 22.9669 13.4253C23.0596 13.386 23.1593 13.3657 23.26 13.3657C23.3607 13.3657 23.4604 13.386 23.5531 13.4253C23.6458 13.4647 23.7296 13.5223 23.7996 13.5948C23.8695 13.6673 23.9242 13.7531 23.9602 13.8471C23.9963 13.9412 24.0131 14.0415 24.0095 14.1421L24.0095 22.6274Z"
+                        fill="#050908" />
+                </svg>
+                <p>We deliver compact, powerful remote work solutions to keep your team in sync, anywhere you go.</p>
+            </div>
+        </div>
+    </section>
+</body>
+<script>
+    /**
+ * YouTube Tutorial:
+ * https://youtu.be/rbN2FzEZWs0
+ */
+
+    /**
+     * FAKE LOADER
+     */
+    const tl = gsap.timeline();
+    const loader = document.querySelector('.loader');
+    const hero = document.querySelector('.hero');
+    const title = document.querySelector('h1');
+    const splitTitle = new SplitType(title, {
+        type: 'words'
+    });
+    const text = document.querySelector('.text');
+    const header = document.querySelector('header');
+    const spline = document.querySelector('spline-viewer');
+
+    tl
+        .to(loader, {
+            opacity: 0,
+            duration: 0.3,
+            ease: "power1.inOut",
+            delay: 1.5
+        })
+        .to(hero, {
+            width: 'calc(100vw - 4rem)',
+            height: 'calc(100vh - 4rem)',
+            borderRadius: '2rem',
+            duration: 0.7,
+            ease: "power1.inOut"
+        })
+        .to(spline, {
+            opacity: 1,
+            duration: 1,
+            ease: "power2.out",
+        })
+        .to(splitTitle.words, {
+            y: 0,
+            duration: 1,
+            stagger: .15,
+            ease: "power2.inOut",
+        }, '<')
+        .to(text, {
+            opacity: 1,
+            duration: 1,
+            ease: "power2.out",
+        }, '-=50%')
+        .to(header, {
+            opacity: 1,
+            duration: 1,
+            ease: "power2.out",
+        }, '<')
+
+    /**
+     * CUSTOM CURSOR
+     */
+
+    const bigCircleElement = document.querySelector('.big-circle');
+    const smallCircleElement = document.querySelector('.small-circle');
+
+    const mouse = { x: 0, y: 0 },
+        bigCircle = { x: 0, y: 0 },
+        smallCircle = { x: 0, y: 0 };
+
+    window.addEventListener('mousemove', e => {
+        mouse.x = e.x;
+        mouse.y = e.y;
+    });
+
+    const smallCircleSpeed = 0.5;
+    const bigCircleSpeed = 0.15;
+
+    const tick = () => {
+        // Move big circle
+        bigCircle.x += (mouse.x - bigCircle.x) * bigCircleSpeed;
+        bigCircle.y += (mouse.y - bigCircle.y) * bigCircleSpeed;
+        bigCircleElement.style.transform = `translate(${bigCircle.x}px, ${bigCircle.y}px)`;
+
+        // Move small circle
+        smallCircle.x += (mouse.x - smallCircle.x) * smallCircleSpeed;
+        smallCircle.y += (mouse.y - smallCircle.y) * smallCircleSpeed;
+        smallCircleElement.style.transform = `translate(${smallCircle.x}px, ${smallCircle.y}px)`;
+
+        window.requestAnimationFrame(tick);
+    }
+
+    tick();
+
+    /**
+     * MAGNETIC BUTTON
+     * https://codepen.io/gusevdigital/pen/QWoOZMV
+     */
+    const button = document.querySelector('.button');
+    let boundingRect = button.getBoundingClientRect();
+    window.addEventListener('resize', () => {
+        boundingRect = button.getBoundingClientRect();
+    });
+
+    button.addEventListener('mousemove', (e) => {
+        const mousePosX = e.pageX - boundingRect.left;
+        const mousePosY = e.pageY - boundingRect.top;
+
+        gsap.to(button, {
+            x: (mousePosX - boundingRect.width / 2) * 0.4,
+            y: (mousePosY - boundingRect.height / 2) * 0.4,
+            duration: 0.8,
+            ease: 'power3.out',
+        });
+    });
+
+    button.addEventListener('mouseleave', () => {
+        gsap.to(button, {
+            x: 0,
+            y: 0,
+            duration: 0.8,
+            ease: 'elastic.out(1,0.3)'
+        });
+    });
+</script>
+
+</html>

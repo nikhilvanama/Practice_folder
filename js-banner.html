@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .banner {
+            width: 100%;
+            height: 400px;
+            color: white;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nagivation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dots {
+            padding: 10px 20px;
+            cursor: pointer;
+            color: black;
+        }
+
+        span.dot {
+            padding: 10px 20px;
+            border: 1px solid black;
+            margin: 5px;
+        }
+
+        .active {
+            color: white;
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="banner-wrap">
+            <div class="banner active">
+                1
+            </div>
+            <div class="banner" style="display: none;">
+                2
+            </div>
+            <div class="banner" style="display: none;">
+                3
+            </div>
+            <div class="banner" style="display: none;">
+                4
+            </div>
+            <div class="banner" style="display: none;">
+                5
+            </div>
+        </div>
+        <div class="navigation">
+            <button onclick="prev_slide()"><</button>
+            <button onclick="next_slide()">></button>
+        </div>
+    </div>
+</body>
+<script>
+    var banner = jQuery(".banner").length;
+    var dot = "<div class=dots>"
+    for (var i = 1; i < banner + 1; i++) {
+        dot += "<span class='dot' onclick=dotclick(" + i + ") id=" + i + " >" + i + "</span>";
+    }
+    dot += "</div>";
+    jQuery(".container").append(dot);
+    jQuery(".dot").eq(0).addClass("active").siblings().removeClass("active");
+
+    function dotclick(index) {
+        jQuery(".dot").eq(index - 1).addClass("active").siblings().removeClass("active");
+        jQuery(".banner").eq(index - 1).addClass("active").show().siblings().removeClass("active").hide();
+    }
+
+    function next_slide() {
+        var active = jQuery(".banner.active");
+        var next = jQuery(active).next();
+        if (next.length == 0) {
+            next = jQuery(".banner:first");
+        }
+        jQuery(active).removeClass("active").hide();
+        next.addClass("active").show();
+        jQuery(".dot").eq(jQuery(".banner.active").index()).addClass("active").siblings().removeClass("active");
+    }
+
+    function prev_slide() {
+        var active = jQuery(".banner.active");
+        var next = jQuery(active).prev();
+        if (next.length == 0) {
+            next = jQuery(".banner:last");
+        }
+        jQuery(".banner").removeClass("active").hide();
+        next.addClass("active").show();
+        jQuery(".dot").eq(jQuery(".banner.active").index()).addClass("active").siblings().removeClass("active");
+    }
+
+    //setInterval(function () {
+    //    if (jQuery(".banner:hover").length == 0) {
+    //        next_slide();
+    //    }
+    //}, 1500)
+</script>
+</html>

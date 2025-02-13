@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="assets/style.css"> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .btn-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #f1f1f1;
+            border: none;
+            cursor: pointer;
+        }
+        .p-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        p {
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #f1f1f1;
+            border: none;
+        }
+        .active{
+            background-color: red;
+        }
+    </style>
+    <main>
+        <div class="container">
+            <div class="btn-wrap">
+                <button class="active">click 1</button>
+                <button>click 2</button>
+                <button>click 3</button>
+                <button>click 4</button>
+                <button>click 5</button>
+                <button>click 6</button>
+                <button>click 7</button>
+                <button>click 8</button>
+                <button>click 9</button>
+            </div>
+            <div class="p-wrap">
+                <p class="active">1</p>
+                <p>2</p>
+                <p>3</p>
+                <p>4</p>
+                <p>5</p>
+                <p>6</p>
+                <p>7</p>
+                <p>8</p>
+                <p>9</p>
+            </div>
+        </div>
+    </main>
+</body>
+<script>
+    jQuery('.btn-wrap button').each(function(){
+        console.log('each'+jQuery(this))
+            jQuery(this).click(function(){
+            console.log('click'+jQuery(this))
+        })
+    })    
+</script>  
+</html>

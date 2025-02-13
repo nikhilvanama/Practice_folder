@@ -1,0 +1,121 @@
+@font-face {
+  font-family: Bebas Neue;
+  src: url(BebasNeue-Regular.woff2);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  font-size: 32px;
+  font-family: Bebas Neue, Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: #faf4e7;
+  color: #000000;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5rem;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 320px;
+
+  position: relative;
+  z-index: 1;
+
+  gap: 1rem;
+  padding: 5rem 2rem;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+figure.pos1 {
+  grid-column: 2 / -1;
+  grid-row: 1 / span 2;
+}
+
+figure.pos2 {
+  grid-column: 3;
+  grid-row: 3 / span 2;
+}
+
+figure.pos3 {
+  grid-column: 1 / 3;
+  grid-row: 4 / span 2;
+}
+
+figure.pos4 {
+  grid-column: 2 / -1;
+  grid-row: 6 / span 2;
+}
+
+figure.pos5 {
+  grid-column: 1;
+  grid-row: 7 / span 2;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+
+  padding: 1rem 2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+footer nav {
+  display: flex;
+  gap: 1rem;
+}
+
+a {
+  color: currentColor;
+  text-decoration-color: #cd3c2f;
+  text-underline-offset: 4px;
+}
+
+a:hover {
+  text-decoration-color: #000000;
+}
+
+svg.squiggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 200vw;
+  z-index: 1;
+}
+
+svg.squiggle path {
+  stroke-width: 0.5rem;
+}

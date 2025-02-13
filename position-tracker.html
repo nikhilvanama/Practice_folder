@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mouse Move Event</title>
+    <style>
+        .tracker {
+            position: absolute;
+            background: red;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="tracker" id="tracker"></div>
+    <script>
+        const tracker = document.getElementById("tracker");
+
+        document.addEventListener("mousemove", (event) => {
+            tracker.style.left = event.clientX + "px";
+            tracker.style.top = event.clientY + "px";
+        });
+    </script>
+</body>
+</html>

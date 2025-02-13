@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Document</title>
+    <style>
+        .wrapper{
+            display: flex;
+            width: 300px;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 25px;
+            margin: 0 auto;
+        }
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <button  class="dec">-</button>
+        <p class="number">1</p>
+        <button  class="inc">+</button>
+    </div>
+    <div class="wrapper">
+        <button  class="dec">-</button>
+        <p class="number">1</p>
+        <button  class="inc">+</button>
+    </div>
+    <div class="wrapper">
+        <button  class="dec">-</button>
+        <p class="number">1</p>
+        <button  class="inc">+</button>
+    </div>
+</body>
+<script>
+    jQuery('.wrapper .dec').click(function(){
+        var variable=parseFloat($(this).siblings(".number").text());
+        var index = jQuery(this).parent().index();
+        sub(variable,index);
+    });
+    jQuery('.wrapper .inc').click(function(){
+        var variable=parseFloat($(this).siblings(".number").text());
+        var index = jQuery(this).parent().index();
+        add(variable,index);
+    });
+    function add(variable,index){
+        if(variable<10){
+            variable+=1;
+            jQuery('.wrapper').eq(index).find('.number').text(variable);
+        }
+        else{
+            alert("limit reached")
+        }
+    }
+    function sub(variable,index){
+        if (variable > 1) {
+            variable -= 1;
+           jQuery('.wrapper').eq(index).find('.number').text(variable);
+        } else {
+            alert("You can't go below zero!");
+        }
+    };
+
+</script>
+</html>

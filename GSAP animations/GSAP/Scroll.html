@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parallax Reveal</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image {
+            width: 50%;
+            text-align: center;
+        }
+
+        .image img {
+            width: 80%;
+            height: 80%;
+            object-fit: cover;
+        }
+
+        .content {
+            width: 50%;
+            color: rgb(0, 0, 0);
+            font-size: 2rem;
+        }
+
+        .content h1 {
+            opacity: 0;
+        }
+
+        .content p {
+            opacity: 0;
+        }
+
+        .image {
+            opacity: 0;
+        }
+
+        .video-wrap {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+        }
+
+        .video-wrap h1 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20rem;
+            z-index: 1;
+            margin-top: 0;
+            width: 100%;
+            padding: 0 20px;
+            clip-path: inset(0 0 0 0);
+            background: rgb(0 0 0);
+            height: 100%;
+            mix-blend-mode: multiply;
+            color: white;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+        }
+
+        .video-wrap h1::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            background: inherit;
+            clip-path: inherit;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="section">
+        <div class="image">
+            <img src="1.png" alt="Image 1">
+        </div>
+        <div class="content">
+            <h1>Section 1</h1>
+            <p>This is the content for the first section.</p>
+        </div>
+    </div>
+    <div class="section">
+        <div class="image">
+            <img src="2.png" alt="Image 2">
+        </div>
+        <div class="content">
+            <h1>Section 2</h1>
+            <p>This is the content for the second section.</p>
+        </div>
+    </div>
+    <div class="section">
+        <div class="image">
+            <img src="3.png" alt="Image 3">
+        </div>
+        <div class="content">
+            <h1>Section 3</h1>
+            <p>This is the content for the third section.</p>
+        </div>
+    </div>
+    <div class="section">
+        <div class="image">
+            <img src="4.png" alt="Image 4">
+        </div>
+        <div class="content">
+            <h1>Section 4</h1>
+            <p>This is the content for the fourth section.</p>
+        </div>
+    </div>
+    <div class="section"></div>
+    <div class="video-wrap">
+        <div style="position: relative; width: 100%; height: 100%;">
+            <video src="video.webm" autoplay loop muted></video>
+            <h1>Test</h1>
+        </div>
+    </div>
+    <div class="section"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const sections = document.querySelectorAll('.section');
+
+        sections.forEach((section, index) => {
+            const image = section.querySelector('.image');
+            const content = section.querySelector('.content');
+            const h1 = section.querySelector('h1');
+            const p = section.querySelector('p');
+            const timeline = gsap.timeline({
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top top",
+                    end: "bottom 20%",
+                    scrub: true,
+                    markers: true,
+                    pin: true,
+                    pinSpacing: false,  /* CHANGED: pinSpacing set to false to avoid unexpected shifts */
+                },
+            });
+
+            timeline.fromTo(image, {
+                opacity: 0,
+                scale: 1.5,
+                x: -200,
+            }, {
+                opacity: 1,
+                scale: 1,
+                duration: 1,
+                ease: "power1.inOut",
+                x: 0,
+            })
+                .fromTo(content, {
+                    opacity: 0,
+                }, {
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power1.inOut",
+                })
+                .fromTo(h1, {
+                    opacity: 0,
+                    y: 150,
+                }, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power1.inOut",
+                })
+                .fromTo(p, {
+                    opacity: 0,
+                    y: 150,
+                }, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power1.inOut",
+                });
+        });
+
+        const videoWrap = document.querySelector('.video-wrap');
+        const video = videoWrap.querySelector('video');
+        const h1Video = videoWrap.querySelector('h1');
+
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: videoWrap,
+                start: "top top",
+                end: "bottom top",
+                scrub: true,
+                markers: true,
+                pin: true,
+                pinSpacing: false,  /* CHANGED: pinSpacing set to false to prevent spacing issues */
+            },
+        })
+            .fromTo(h1Video, {
+                scale: 1,
+            }, {
+                scale: 3,
+                duration: 1,
+                ease: "power1.inOut",
+            })
+            .fromTo(h1Video, {
+                clipPath: "inset(0 0 0 0)",
+            }, {
+                clipPath: "inset(0 0 0 100%)",
+                duration: 1,
+                ease: "power1.inOut",
+            }); /* CHANGED: added clip-path animation for smooth transition */
+    </script>
+</body>
+
+</html>
