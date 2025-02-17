@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: cornflowerblue;
+        }
+
+        .container {
+            min-width: max-content;
+            display: flex;
+            flex-direction: column;
+            background-color: #fff;
+            padding: 24px;
+            border-radius: 10px;
+        }
+
+        .container h1 {
+            color: cornflowerblue;
+            margin-top: 0px;
+        }
+
+        .container .row input {
+            height: 40px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 24px;
+            padding: 0px 16px;
+            color: #666666;
+        }
+
+        .container .row input:focus {
+            border-color: cornflowerblue;
+        }
+
+        .container .row button {
+            background-color: cornflowerblue;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 20px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .container .row button:hover {
+            background-color: rgb(63, 115, 211);
+        }
+
+        .container ul.listcontainer {
+            list-style: none;
+        }
+
+        .container ul.listcontainer li {
+            color: #000;
+            list-style: none;
+            padding: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            position: relative;
+        }
+        .container ul.listcontainer li.checked {
+            text-decoration: line-through;
+        }
+
+        .container ul.listcontainer li::before {
+            content: '\f0c8';
+            position: absolute;
+            font-family: fontawesome;
+            color: #ddd;
+            left: -20px;
+            top: 6px;
+            padding: 0;
+            font-size: 18px;
+        }
+
+        .container ul.listcontainer li.checked::before {
+            content: '\f14a';
+            color: cornflowerblue;
+        }
+
+        .container ul.listcontainer li span {
+            position: absolute;
+            right: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            text-align: center;
+        }
+        .container ul.listcontainer li span:hover {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 id="title">To-do List</h1>
+        <div class="row">
+            <input type="text" id="taskInput" placeholder="Enter a Task">
+            <button id="addTask" onclick="addTask()">Add</button>
+        </div>
+        <ul class="listcontainer">
+            <!-- <li class="checked">Hello</li>
+            <li>First Task</li> -->
+        </ul>
+    </div>
+
+    <script>
+        let taskInput = document.getElementById('taskInput');
+        let taskList = document.querySelector('.listcontainer');
+
+        function addTask() {
+            if (taskInput.value === '') {
+                alert('Please enter a Task');
+            }
+            else {
+                let taskInputValue = taskInput.value;
+                let li = document.createElement('li');
+                li.innerHTML = taskInputValue;
+                taskList.appendChild(li);
+                let span = document.createElement('span');
+                span.innerHTML = '\u00D7';
+                li.appendChild(span);
+            }
+            taskInput.value = '';
+            storetasks();
+        }
+
+        taskList.addEventListener('click', function(event) {
+            if(event.target.tagName === 'LI') {
+                event.target.classList.toggle('checked');
+                storetasks();
+            }
+            else if(event.target.tagName === 'SPAN') {
+                event.target.parentElement.remove();
+                storetasks();
+            }
+        })
+
+        function storetasks() {
+            localStorage.setItem("tasks", taskList.innerHTML);
+        }
+        function loadTasks() {
+            taskList.innerHTML = localStorage.getItem("tasks");
+        }
+        loadTasks();
+    </script>
+</body>
+
+</html>
