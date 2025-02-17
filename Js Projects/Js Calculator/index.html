@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Js Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <input type="text" id="display" name="display" readonly>
+        <div>
+            <input type="button" class="operator" value="AC" onclick="clearDisplay()">
+            <input type="button" class="operator" value="D" onclick="DeleteDisplay()">
+            <input type="button" class="operator" value="%" onclick="updateDisplay('%')">
+            <input type="button" class="operator" value="/" onclick="updateDisplay('/')">
+        </div>
+        <div>
+            <input type="button" class="number" value="7" onclick="updateDisplay('7')">
+            <input type="button" class="number" value="8" onclick="updateDisplay('8')">
+            <input type="button" class="number" value="9" onclick="updateDisplay('9')">
+            <input type="button" class="operator" value="*" onclick="updateDisplay('*')">
+        </div>
+        <div>
+            <input type="button" class="number" value="4" onclick="updateDisplay('4')">
+            <input type="button" class="number" value="5" onclick="updateDisplay('5')">
+            <input type="button" class="number" value="6" onclick="updateDisplay('6')">
+            <input type="button" class="operator" value="-" onclick="updateDisplay('-')">
+        </div>
+        <div>
+            <input type="button" class="number" value="1" onclick="updateDisplay('1')">
+            <input type="button" class="number" value="2" onclick="updateDisplay('2')">
+            <input type="button" class="number" value="3" onclick="updateDisplay('3')">
+            <input type="button" class="operator" value="+" onclick="updateDisplay('+')">
+        </div>
+        <div>
+            <input type="button" class="operator" value="0" onclick="updateDisplay('0')">
+            <input type="button" class="operator" value="." onclick="updateDisplay('.')">
+            <input type="button" class="operator" value="=" onclick="result()">
+        </div>
+    </div>
+    <script>
+        let display = document.getElementById('display');
+
+        function updateDisplay(value) {
+            display.value += value;
+        }
+
+        function clearDisplay() {
+            display.value = '';
+        }
+
+        function DeleteDisplay() {
+            display.value = display.value.toString().slice(0, -1);
+        }
+
+        function result() {
+            try {
+                display.value = eval(display.value);
+            }
+            catch (error) {
+                display.value = 'Error';
+            }
+        }
+    </script>
+</body>
+
+</html>
