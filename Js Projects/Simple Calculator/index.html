@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Js Calculator</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Jquery Cdn -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Custom Js File -->
 </head>
+
 <body>
+
     <div class="container">
-        <input type="text" id="display" name="display" readonly>
+        <input type="text" id="display" name="display">
         <div>
             <input type="button" class="operator" value="AC" onclick="display.value = '' ">
-            <input type="button" class="operator" value="D" onclick="display.value = display.value.toString().slice(0,-1) ">
+            <input type="button" class="operator" value="D"
+                onclick="display.value = display.value.toString().slice(0,-1) ">
             <input type="button" class="operator" value="%" onclick="display.value += '%' ">
             <input type="button" class="operator" value="/" onclick="display.value += '/' ">
         </div>
@@ -39,5 +46,15 @@
             <input type="button" class="operator" value="=" onclick="display.value = eval(display.value) ">
         </div>
     </div>
+    <script>
+        const node = display;
+        node.addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                display.value = eval(display.value)
+            }
+        });
+
+    </script>
 </body>
+
 </html>
