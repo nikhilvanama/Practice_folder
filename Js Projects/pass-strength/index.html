@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            margin: 10rem;
+            font-family: Arial, sans-serif;
+        }
+        .container h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #333;
+        }
+        .container .input-pass input {
+            max-height: 55px;
+            width: 250px;
+            padding: 12px;
+            border: 2px solid ;
+            border-color: #333;
+            border-radius: 4px;
+        }
+        .container .input-pass p {
+            font-size: 14px;
+            font-weight: 400;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Password</h1>
+        <div class="input-pass">
+            <input type="password" id="password" placeholder="Enter the Password">
+            <p class="message">Password is <span class="strength"></span></p>
+        </div>
+    </div>
+    <script>
+        const inp = document.getElementById('password');
+        const msg = document.querySelector('.message');
+        const str = document.querySelector('.strength');
+
+        inp.addEventListener('input', () => {
+            if(inp.value.length > 0) {
+                msg.style.display = 'block';
+            }
+            else {
+                msg.style.display = 'none';
+            }
+            if(inp.value.length < 4) {
+                str.innerHTML = 'Weak';
+                str.style.color = 'red';
+                inp.style.borderColor ='red';
+            }
+            else if(inp.value.length < 8) {
+                str.innerHTML = 'Medium';
+                str.style.color = 'Yellow';
+                inp.style.borderColor ='yellow';
+            }
+            if(inp.value.length >= 8) {
+                str.innerHTML = 'Strong';
+                str.style.color = 'Green';
+                inp.style.borderColor ='green';
+            }
+        });
+    </script>
+</body>
+</html>
