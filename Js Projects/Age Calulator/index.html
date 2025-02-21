@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a588e;
+        }
+       .container {
+        display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+       }
+       .container h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #fff;
+       }
+       .container .wrapper {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px 30px;
+            background-color: #fff;
+            border-radius: 10px;
+       }
+       .container .wrapper input {
+        height: 40px;
+        width: 200px;
+        padding: 0px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+       }
+       .container .wrapper button {
+        height: 34px;
+        margin-left: 20px;
+        background-color: #1a588e;
+        color: #fff;
+        border: none;
+        padding: 0px 10px;
+        border-radius: 3px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        &:hover {
+            background-color: #14446d;
+        }
+       }
+       .container p {
+        color: #fff;
+       }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Age Calculator</h1>
+        <div class="wrapper">
+            <input type="date" id="dob" required>
+            <button onclick="calculateAge()">Calculate</button>
+        </div>
+        <p id="result"></p>
+    </div>
+    <script>
+        const DateIput = document.getElementById('dob');
+        DateIput.max = new Date().toISOString().split('T')[0];
+        const resultElement = document.getElementById('result');
+
+        function calculateAge() {
+            const dob = new Date(DateIput.value);
+            const d1 = dob.getDate();
+            const m1 = dob.getMonth() + 1;
+            const y1 = dob.getFullYear();
+
+            const d2 = new Date().getDate();
+            const m2 = new Date().getMonth() + 1;
+            const y2 = new Date().getFullYear();
+
+            let d3, m3, y3;
+
+            y3 = y2 - y1;
+
+            if (m2 >= m1) {
+                m3 = m2 - m1;
+            } else {
+                y3--;
+                m3 = 12 + m2 - m1;
+            }
+            if(d2 >= d1) {
+                d3 = d2 - d1;
+            } else {
+                m3--;
+                d3 = getDaysInMonth(m1, y1) + d2 - d1;
+            }
+            if(m3 < 0) {
+                y3--;
+                m3 = 11;
+            }
+            resultElement.textContent = `You are ${y3} years, ${m3} months, and ${d3} days old.`;
+        }
+
+        function getDaysInMonth(month, year) {
+            return new Date(year,month, 0).getDate();
+        }
+    </script>
+</body>
+</html>
