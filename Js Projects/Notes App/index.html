@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App</title>
+    <!-- font Awsome CDN -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            background-color: #2492b4;
+        }
+        .container {
+            margin: 50px;
+        }
+        .container h1 {
+            color: white;
+            font-size: 24px;
+        }
+        .container button{
+            background-color: #19728d;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .container .notescontainer p {
+            position: relative;
+            height: 120px;
+            background-color: #fff;
+            color: #000;
+            border-radius: 5px;
+            width: 300px;
+            padding: 10px;
+        }
+     </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Notes App</h1>
+        <button id="button">Create Notes</button>
+        <div class="notescontainer">
+            <!-- Notes will be added dynamically here -->
+        </div>
+    </div>
+
+    <script>
+        const button = document.getElementById('button');
+        const notesContainer = document.querySelector('.notescontainer');
+        const notes = document.querySelectorAll('.notes-item');
+
+        function getNotes() {
+            notesContainer.innerHTML = localStorage.getItem('notes') || '';
+        }
+        getNotes();
+
+        function storeNotes() {
+            localStorage.setItem('notes', notesContainer.innerHTML);
+        }
+
+        button.addEventListener('click', function() {
+            const notesitem = document.createElement('p');
+            const icon = document.createElement('img');
+            notesitem.classList.add('notes-item');
+            notesitem.setAttribute('contenteditable', 'true');
+            icon.setAttribute('src', 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.flaticon.com%2Ffree-icon%2Fdelete_6861362&psig=AOvVaw0OVSY2wPgyhu4jVpDzI7X_&ust=1740209153977000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCLDJzLOe1IsDFQAAAAAdAAAAABAE');
+            notesContainer.appendChild(notesitem).appendChild(icon);
+            storeNotes();
+        })
+
+        notesContainer.addEventListener('click', function(e) {
+            if(e.target.tagName === 'IMG') {
+                e.target.parentNode.remove();
+            }
+            else if(e.target.tagName === 'P') {
+                notes = document.querySelectorAll('.notes-item');
+                notes.forEach(note => {
+                    if(note === e.target) {
+                        storeNotes();
+                    }
+                })
+            }
+        })
+    </script>
+</body>
+</html>
