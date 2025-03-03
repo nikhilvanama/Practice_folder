@@ -28,7 +28,6 @@ ScrollTrigger.scrollerProxy(pageContainer, {
 });
 
 ////////////////////////////////////
-////////////////////////////////////
 window.addEventListener("load", function () {
   let pinBoxes = document.querySelectorAll(".pin-wrap > *");
   let pinWrap = document.querySelector(".pin-wrap");
