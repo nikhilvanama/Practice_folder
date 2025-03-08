@@ -11,10 +11,15 @@
     </div>
     <script>
         const myDiv = document.querySelector('#myDiv');
+
+        var xaxis, yaxis;
     
         myDiv.addEventListener('mousemove', (event) => {
-            console.log(`Mouse position (relative to element): X=${event.offsetX}, Y=${event.offsetY}`);
+            xaxis = event.offsetX;
+            yaxis = event.offsetY
+            console.log(xaxis,yaxis);
         });
+
     
         console.log(`Element dimensions: Width=${myDiv.offsetWidth}, Height=${myDiv.offsetHeight}`);
         console.log(`Viewport dimensions: Width=${window.innerWidth}, Height=${window.innerHeight}`);
