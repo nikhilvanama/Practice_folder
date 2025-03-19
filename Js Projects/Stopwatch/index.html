@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stop Watch</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .stopwatch {
+            width: 600px;
+            height: 400px;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+        p#time {
+            color: #fff;
+            font-size: 64px;
+            text-align: center;
+            font-weight: 600;
+        }
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="stopwatch">
+            <p id="time">00:00:00</p>
+            <div class="buttons">
+                <button id="start" onclick="startwatch()">Start</button>
+                <button id="stop" onclick="stoptimer()">Stop</button>
+                <button id="reset" onclick="resetwatch()">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+         let [hrs, mins, secs] = [0,0,0];
+         let timer = document.getElementById("time");
+         let timers = null;
+        
+         function stopwatch() {
+            secs++;
+            if(secs == 60) {
+                secs = 0;
+                mins++;
+                if(mins == 60) {
+                    mins = 0;
+                    hrs++;
+                }
+            }
+
+            let h = hrs < 10 ? "0" + hrs : hrs;
+            let m = mins < 10? "0" + mins : mins;
+            let s = secs < 10? "0" + secs : secs;
+
+            timer.innerHTML = h + ":" + m + ":" + s;
+         }
+
+         function startwatch() {
+            if (timers !== null) {
+                clearInterval(timers);
+            }
+            timers = setInterval(stopwatch,1000);
+         }
+
+         function resetwatch() {
+            clearInterval(timers);
+            hrs = mins = secs = 0;
+            timer.innerHTML = "00:00:00";
+         }
+
+         function stoptimer() {
+            clearInterval(timers);
+         }
+    </script>
+</body>
+</html>
