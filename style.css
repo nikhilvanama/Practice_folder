@@ -22,6 +22,7 @@
 }
 .body .header .container .headermainwrap{
     display: flex;
+    
     align-items: center;
     max-width: 1300px;
 }
