@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <!-- JQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        :root {
+            scroll-behavior: smooth;
+
+            --light: #fff;
+
+            --lightblue1: #f2f8ff;
+
+            --lightblue2: #dcebfd;
+
+            --lightblue3: #5AA6FF;
+
+            --blue: #1A43BF;
+
+            --darkblue: #1A3A8E;
+
+            --darkblue2: #152556;
+
+            --lightyellow1: #FDF9E9;
+
+            --lightyellow2: #FBF3C6;
+
+            --lightyellow3: #F9E48F;
+
+            --yellow: #EFB319;
+
+            --yellow2: rgba(255, 166, 0, 1);
+
+            --darkyellow: #E09E12;
+
+            --dark: #202224;
+
+            --dark2: #000;
+
+            --grey: #797A7C;
+
+            --grey2: #B3B3B3;
+
+            --grey3: #E0E0E0;
+
+            --grey4: rgba(153, 152, 151, 0.25);
+
+            --green: rgb(6, 150, 90);
+
+            --green2: rgba(48, 190, 130, 1);
+
+            --lightgreen: rgba(224, 245, 236, 1);
+
+            --red: #ff304d;
+
+            --red2: rgba(255, 86, 48, 1);
+
+            --lightred: #ffeaed;
+
+            --lightred2: #ffdce1;
+
+        }
+
+        .card {
+            /* margin-bottom: 30px; */
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0px 0px 8px #d6d6d6;
+            height: 100%;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* Custom Toast CSS */
+
+        .Customtoast {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            width: 350px;
+            background: #fff;
+            color: var(--dark);
+            padding: 15px 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 10px;
+            border-left: 5px solid;
+            box-shadow: 0 0px 10px 0px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 40px;
+            right: 20px;
+            z-index: 999999;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .Customtoast::after {
+            content: '';
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            height: 2.5px;
+            animation: grow 3s linear;
+            transition: all 0.3s;
+        }
+
+        .Customtoast .toast-content p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 16px;
+        }
+
+        .Customtoast .toast-close {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .fadeout {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Toast coloring */
+        /* Toast Blue */
+
+        .Customtoast.blue {
+            border-color: var(--blue);
+        }
+
+        .Customtoast.blue::after {
+            background-color: var(--blue);
+        }
+
+        .Customtoast.blue .toast-icon i {
+            font-size: 20px;
+            color: var(--blue);
+        }
+
+        /* Toast Dark Blue */
+
+        .Customtoast.darkblue {
+            border-color: var(--darkblue);
+        }
+
+        .Customtoast.darkblue::after {
+            background-color: var(--darkblue);
+        }
+
+        .Customtoast.darkblue .toast-icon i {
+            font-size: 20px;
+            color: var(--darkblue);
+        }
+
+        /* Toast Green */
+
+        .Customtoast.green {
+            border-color: var(--green);
+        }
+
+        .Customtoast.green::after {
+            background-color: var(--green);
+        }
+
+        .Customtoast.green .toast-icon i {
+            font-size: 20px;
+            color: var(--green);
+        }
+
+        /* Toast Yellow */
+
+        .Customtoast.yellow {
+            border-color: var(--yellow);
+        }
+
+        .Customtoast.yellow::after {
+            background-color: var(--yellow);
+        }
+
+        .Customtoast.yellow .toast-icon i {
+            font-size: 20px;
+            color: var(--yellow);
+        }
+
+        /* Toast Red */
+
+        .Customtoast.red {
+            border-color: var(--red);
+        }
+
+        .Customtoast.red::after {
+            background-color: var(--red);
+        }
+
+        .Customtoast.red .toast-icon i {
+            font-size: 20px;
+            color: var(--red);
+        }
+
+        /* Toast Black */
+
+        .Customtoast.dark {
+            border-color: var(--dark);
+        }
+
+        .Customtoast.dark::after {
+            background-color: var(--dark);
+        }
+
+        .Customtoast.dark .toast-icon i {
+            font-size: 20px;
+            color: var(--dark);
+        }
+
+        /* Toast Grey */
+
+        .Customtoast.grey {
+            border-color: var(--grey);
+        }
+
+        .Customtoast.grey::after {
+            background-color: var(--grey);
+        }
+
+        .Customtoast.grey .toast-icon i {
+            font-size: 20px;
+            color: var(--grey);
+        }
+
+        @keyframes grow {
+            0% {
+                width: 0;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-25px) translateX(25px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0) translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1 id="title mt-4">Welcome to My Website for Toast Examples</h1>
+        <div class="row p-5">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="#" method="post" id="InputToast">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label for="ToastTitle" class="form-label">Toast Title</label>
+                                    <input type="text" class="form-control" id="ToastTitle" name="ToastTitle">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="ToastContent" class="form-label">Toast Content</label>
+                                    <input type="text" class="form-control" id="ToastContent" name="ToastContent">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="ToastIcon" class="form-label">Toast Icon</label>
+                                    <input type="text" class="form-control" id="ToastIcon" name="ToastIcon">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="ToastColor" class="form-label">Toast Color</label>
+                                    <select type="text" class="form-select" id="ToastColor" name="ToastColor">
+                                        <option value="green">Green</option>
+                                        <option value="yellow">Yellow</option>
+                                        <option value="blue">Blue</option>
+                                        <option value="red">Red</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-primary generate">Generate Toast</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleToast(title, content, icon, color) {
+            const main = document.querySelector('main');
+
+            const Toast = document.createElement('div');
+            Toast.classList.add('Customtoast', color);
+            Toast.innerHTML = `
+        <div class="toast-icon"><i class="${icon}"></i></div>
+        <div class="toast-content">
+            <strong>${title}</strong>
+            <p>${content}</p>
+        </div>
+        <span class="toast-close">&times;</span>
+    `;
+
+            setTimeout(() => {
+                Toast.classList.add('fadeout');
+                setTimeout(() => Toast.remove(), 500);
+            }, 3000);
+
+            main.appendChild(Toast);
+
+            Toast.querySelector('.toast-close').addEventListener('click', () => Toast.remove());
+        }
+
+        $("#InputToast").on('submit', function (e) {
+            e.preventDefault();
+
+            const title = $("#ToastTitle").val().trim();
+            const content = $("#ToastContent").val().trim();
+            const icon = $("#ToastIcon").val().trim();
+            const color = $("#ToastColor").val().trim();
+
+            if (!title || !content || !icon || !color) {
+                alert("Please fill all fields.");
+            } else {
+                toggleToast(title, content, icon, color);
+            }
+        });
+
+
+    </script>
+</body>
+
+</html>
