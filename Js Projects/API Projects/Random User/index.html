@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random User Card</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <!-- Stylesheet -->
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        :root {
+            --theme-color: #5074f3;
+        }
+
+        body {
+            background-color: var(--theme-color);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 25em;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+        }
+
+        .card {
+            width: 100%;
+            padding: 4em 0;
+            background-color: #ffffff;
+            text-align: center;
+            border-radius: 0.5em;
+        }
+
+        .card .img-container {
+            height: 11.25em;
+            width: 11.25em;
+            display: block;
+            margin: -8.75em auto 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 0.3em #ffffff, 0 0 0 0.9em var(--theme-color);
+            border-radius: 50%;
+        }
+
+        .img-container img {
+            width: 100%;
+            border-radius: 50%;
+        }
+
+        .container button {
+            display: block;
+            font-size: 1.2em;
+            width: 90%;
+            margin: 2em auto 0 auto;
+            padding: 1.1em 0;
+            border-radius: 0.3em;
+            border: none;
+            outline: mome;
+            font-weight: 600;
+            color: #000341;
+            cursor: pointer;
+        }
+
+        .card h2 {
+            margin-top: 1.8em;
+            font-weight: 600;
+            color: #000341;
+        }
+
+        .card h3,
+        .card h4 {
+            font-size: 1em;
+            letter-spacing: 0.02em;
+            margin-top: 0.5em;
+            font-weight: 300;
+            color: #90919e;
+        }
+
+        .card i {
+            color: var(--theme-color);
+            margin-right: 0.3em;
+        }
+
+        .card h4 {
+            margin-top: 0.4em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="img-container"></div>
+            <div class="details"></div>
+        </div>
+        <button id="get-user-btn">Get Random User</button>
+    </div>
+    <!-- Script -->
+    <script>
+        let details = document.querySelector(".details");
+        let imgContainer = document.querySelector(".img-container");
+        let getUserBtn = document.getElementById("get-user-btn");
+
+        async function getUser() {
+            let url = await fetch("https://random-data-api.com/api/v2/users?response_type=json");
+            let data = await url.json();
+            console.log(data);
+
+            imgContainer.innerHTML = `<img src= ${data.avatar} alt="image">`;
+            details.innerHTML = `<h2>${data.first_name} ${data.last_name}</h2>
+                                <h3>${data.employment.title}</h3>
+                                <h4><i class="fa-solid fa-location-dot"></i> ${data.address.city}</h4>`;
+            let randomColor =
+                "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0");
+            document.documentElement.style.setProperty("--theme-color", randomColor);
+
+        }
+        window.addEventListener("load", getUser);
+        getUserBtn.addEventListener("click", getUser);
+    </script>
+</body>
+
+</html>

@@ -40,15 +40,17 @@
 </body>
 <script>
     jQuery('.wrapper .dec').click(function(){
-        var variable=parseFloat($(this).siblings(".number").text());
+        var variable = parseFloat($(this).siblings(".number").text());
         var index = jQuery(this).parent().index();
         sub(variable,index);
     });
+
     jQuery('.wrapper .inc').click(function(){
-        var variable=parseFloat($(this).siblings(".number").text());
+        var variable = parseFloat($(this).siblings(".number").text());
         var index = jQuery(this).parent().index();
         add(variable,index);
     });
+
     function add(variable,index){
         if(variable<10){
             variable+=1;
@@ -58,6 +60,7 @@
             alert("limit reached")
         }
     }
+
     function sub(variable,index){
         if (variable > 1) {
             variable -= 1;

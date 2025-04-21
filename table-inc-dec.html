@@ -50,9 +50,9 @@
                 //var snum = $('table tr:last').find('.sno').text();
                 row.find('input').val('');
                 //row.find('.sno').text (parseInt(snum)+ 1);
-                row.find('a').removeClass('btn-primary').removeClass('add-row').addClass('btn-danger').addClass('remove-row').html('-');
+                row.find('a').removeClass('btn-primary').removeClass('add-row').addClass('btn-danger').addClass('remove-row').text('-');
                 $('tbody').append(row);
-                $('.remove-row').off('click').on('click',function(){
+                $('.remove-row').off('click').on('click', function() {
                   $(this).closest('tr').remove();
                 sno_add();
                 })
