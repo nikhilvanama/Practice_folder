@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Guide App</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+
+    <!-- JQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        body,
+        main {
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .card {
+            /* margin-bottom: 30px; */
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0px 0px 8px #dadada;
+            height: 100%;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        input {
+            height: 45px;
+            border: none !important;
+            border-bottom: 2px solid #ccc !important;
+        }
+
+        input:focus {
+            border-color: blue !important;
+            box-shadow: none !important;
+        }
+
+        .result p {
+            font-size: 18px;
+            font-weight: 650;
+            color: black;
+        }
+
+        p.InputText {
+            font-size: 2.5rem;
+            font-weight: 650;
+            line-height: 2.8rem;
+            color: #0563f0;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body p-5">
+                        <h1 class="fs-3 text-start text-primary">Welcome to the Country Guide App</h1>
+
+                        <div class="row justify-content-between align-items-center mt-4">
+                            <div class="col-md-8">
+                                <input type="text" name="SearchInput" id="SearchInput" class="form-control"
+                                    value="India">
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <a href="javascript:void(0)"
+                                    class="btn btn-primary text-center w-100 searchbtn">Search</a>
+                            </div>
+                        </div>
+
+                        <div class="row mt-5 position-relative d-flex flex-column gap-2 result">
+                            <!-- <img src="" alt="country">
+                            <p class="InputText">India</p>
+                            <p class="d-flex gap-2 m-0">Capital : <span class="capital text-secondary fw-medium">New Delhi</span></p>
+                            <p class="d-flex gap-2 m-0">Continent : <span class="continent text-secondary fw-medium">Asia</span></p>
+                            <p class="d-flex gap-2 m-0">Population : <span class="population text-secondary fw-medium">5758486</span></p>
+                            <p class="d-flex gap-2 m-0">Currency : <span class="currency text-secondary fw-medium">Rupee</span></p>
+                            <p class="d-flex gap-2 m-0">Common Languages : <span class="lang text-secondary fw-medium">Hindi</span></p> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        var input = document.getElementById('SearchInput');
+        var result = document.querySelector('.result');
+        var searchbtn = document.querySelector('.searchbtn');
+
+        async function CountryGuide() {
+            const searchTerm = input.value.trim();
+            if (!searchTerm) return;
+
+            try {
+                const url = await fetch(`https://restcountries.com/v3.1/name/${searchTerm}?fullText=true`);
+                const data = await url.json();
+                console.log(data);
+
+                result.innerHTML = `
+                    <div class="image" style="width:150px; height:75px;">
+                        <img src="${data[0].flags.png}" alt="country" height="100%" width="100%" style="object-fit:cover;">
+                    </div>
+                    <p class="InputText text-capitalize">${searchTerm}</p>
+                    <p class="d-flex gap-2 m-0">Capital : <span class="capital text-secondary text-capitalize fw-medium">${data[0].capital[0]}</span></p>
+                    <p class="d-flex gap-2 m-0">Continent : <span class="continent text-secondary fw-medium">${data[0].continents[0]}</span></p>
+                    <p class="d-flex gap-2 m-0">Population : <span class="population text-secondary fw-medium">${data[0].population}</span></p>
+                    <p class="d-flex gap-2 m-0">Currency : <span class="currency text-secondary fw-medium">${data[0].currencies[Object.keys(data[0].currencies)].name} - ${Object.keys(data[0].currencies)[0]}</span></p>
+                    <p class="d-flex gap-2 m-0">Common Languages : 
+                        <span class="lang text-secondary fw-medium">
+                            ${Object.values(data[0].languages).toString().split(",").join(", ")}
+                        </span>
+                    </p>
+                `;
+            }
+
+            catch (error) {
+                if (countryName.length == 0) {
+                    result.innerHTML = `<h3>The input field cannot be empty</h3>`;
+                } else {
+                    result.innerHTML = `<h3>Please enter a valid country name.</h3>`;
+                }
+            }
+        }
+
+        searchbtn.addEventListener('click', CountryGuide);
+
+        input.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                if (input.value.trim() !== "") {
+                    CountryGuide();
+                } else {
+                    alert("Please enter a country name.");
+                }
+            }
+
+            if (e.key === 'Escape') {
+                input.value = "";
+            }
+        });
+
+
+
+    </script>
+
+</body>
+
+</html>
