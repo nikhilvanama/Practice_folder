@@ -11,12 +11,12 @@ app.get('/', (req, res) => {
         {
             id: 2,
             name: 'Nick',
-            age: 25
+            age: 24
         },
         {
             id: 3,
             name: 'Carter',
-            age: 23
+            age: 27
         }
     ])
 });
