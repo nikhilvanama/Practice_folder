@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart.js to ApexChart</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+</head>
+
+<body>
+    <div id="vatChart"></div>
+    <div class="vat-graph"><button class="change-graph" value="line">Line Graph</button></div>
+
+    <div id="totalChart"></div>
+    <div class="total-graph"><button class="change-graph" value="line">Line Graph</button></div>
+
+    <div id="recChart"></div>
+    <div class="rec-graph"><button class="change-graph" value="line">Line Graph</button></div>
+
+    <div id="balChart"></div>
+    <div class="bal-graph"><button class="change-graph" value="line">Line Graph</button></div>
+
+    <script>
+        jQuery(document).ready(function () {
+
+            function getChartData(selector) {
+                var labels = [a,b,c,d,e,f];
+                var values = [40,50,60,55,65];
+                jQuery(`${selector} .labels li`).each(function () {
+                    labels.push(jQuery(this).text());
+                });
+                jQuery(`${selector} .values li`).each(function () {
+                    var rawValue = jQuery(this).text().replace(/,/g, '');
+                    values.push(parseFloat(rawValue));
+                });
+                return { labels, values };
+            }
+
+            function createApexChart(chartId, labels, values, colors, chartType) {
+                var options = {
+                    chart: {
+                        height: 300,
+                        type: chartType,
+                        id: chartId
+                    },
+                    series: [{
+                        name: 'Data Points',
+                        data: values
+                    }],
+                    xaxis: {
+                        categories: labels
+                    },
+                    colors: colors,
+                    stroke: {
+                        curve: chartType === 'line' ? 'smooth' : 'straight'
+                    }
+                };
+
+                var chart = new ApexCharts(document.querySelector(`#${chartId}`), options);
+                chart.render();
+            }
+
+            // 1. VAT Chart
+            var vatData = getChartData('.vat-data');
+            createApexChart('vatChart', vatData.labels, vatData.values, ["#36A2EB"], 'bar');
+
+            jQuery('.vat-graph .change-graph').click(function () {
+                var currentType = jQuery(this).val();
+                var newType = currentType === 'line' ? 'bar' : 'line';
+                jQuery(this).val(newType);
+                jQuery(this).text(newType === 'line' ? 'Line Graph' : 'Bar Graph');
+
+                ApexCharts.exec('vatChart', 'updateOptions', {
+                    chart: {
+                        type: newType
+                    },
+                    stroke: {
+                        curve: newType === 'line' ? 'smooth' : 'straight'
+                    }
+                });
+            });
+
+            // 2. TOTAL Chart
+            var totalData = getChartData('.total-data');
+            createApexChart('totalChart', totalData.labels, totalData.values, ["#669bbc"], 'bar');
+
+            jQuery('.total-graph .change-graph').click(function () {
+                var currentType = jQuery(this).val();
+                var newType = currentType === 'line' ? 'bar' : 'line';
+                jQuery(this).val(newType);
+                jQuery(this).text(newType === 'line' ? 'Line Graph' : 'Bar Graph');
+
+                ApexCharts.exec('totalChart', 'updateOptions', {
+                    chart: {
+                        type: newType
+                    },
+                    stroke: {
+                        curve: newType === 'line' ? 'smooth' : 'straight'
+                    }
+                });
+            });
+
+            // 3. REC Chart
+            var recData = getChartData('.rec-data');
+            createApexChart('recChart', recData.labels, recData.values, ["#4bc0c0"], 'bar');
+
+            jQuery('.rec-graph .change-graph').click(function () {
+                var currentType = jQuery(this).val();
+                var newType = currentType === 'line' ? 'bar' : 'line';
+                jQuery(this).val(newType);
+                jQuery(this).text(newType === 'line' ? 'Line Graph' : 'Bar Graph');
+
+                ApexCharts.exec('recChart', 'updateOptions', {
+                    chart: {
+                        type: newType
+                    },
+                    stroke: {
+                        curve: newType === 'line' ? 'smooth' : 'straight'
+                    }
+                });
+            });
+
+            // 4. BAL Chart
+            var balData = getChartData('.bal-data');
+            createApexChart('balChart', balData.labels, balData.values, ["#ff6384"], 'bar');
+
+            jQuery('.bal-graph .change-graph').click(function () {
+                var currentType = jQuery(this).val();
+                var newType = currentType === 'line' ? 'bar' : 'line';
+                jQuery(this).val(newType);
+                jQuery(this).text(newType === 'line' ? 'Line Graph' : 'Bar Graph');
+
+                ApexCharts.exec('balChart', 'updateOptions', {
+                    chart: {
+                        type: newType
+                    },
+                    stroke: {
+                        curve: newType === 'line' ? 'smooth' : 'straight'
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+
+</html>
