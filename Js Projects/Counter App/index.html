@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter App</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #62b8f5, #4475ef);
+            font-family: 'Poppins', sans-serif;
+        }
+        .counter-container {
+            background: rgba(255,255,255,0.15);
+            padding: 2em 3em;
+            border-radius: 1em;
+            box-shadow: 0 1.8em 3.7em rgba(3, 46, 87, 0.2);
+            text-align: center;
+        }
+        .counter-value {
+            font-size: 4em;
+            color: #fff;
+            margin-bottom: 1em;
+        }
+        .btns {
+            display: flex;
+            justify-content: center;
+            gap: 1em;
+        }
+        button {
+            padding: 0.7em 1.5em;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 0.3em;
+            background: #fff;
+            color: #4475ef;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s, color 0.2s;
+        }
+        button:hover {
+            background: #4475ef;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="counter-container">
+        <div class="counter-value" id="counter">0</div>
+        <div class="btns">
+            <button id="decrement">-</button>
+            <button id="reset">Reset</button>
+            <button id="increment">+</button>
+        </div>
+    </div>
+    <script>
+        let count = 0;
+        const counter = document.getElementById('counter');
+        document.getElementById('increment').onclick = function() {
+            count++;
+            counter.textContent = count;
+        };
+        document.getElementById('decrement').onclick = function() {
+            count--;
+            counter.textContent = count;
+        };
+        document.getElementById('reset').onclick = function() {
+            count = 0;
+            counter.textContent = count;
+        };
+    </script>
+</body>
+</html>
